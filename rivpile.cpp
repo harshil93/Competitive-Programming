@@ -55,32 +55,28 @@ main()
 			disk[i].second = y;
 		}
 
-		std::cout << "input read" << std::endl;
+		// std::cout << "input read" << std::endl;
 		std::sort(disk.begin(), disk.end());
 
 		vector<pair<int, int> > cand = vector<pair<int, int> >();
-		for (int i = 0; i < disk.size(); i++)
+		for (int i = disk.size() - 1; i >=0; --i)
 		{
-			std::cout << "disk inserted " << i << std::endl;
-			while (cand.size() > 0)
+			bool flag = true;
+			for (int j = i+1; j < disk.size(); ++j)
 			{
-				if (disk[i].second <= cand.back().second)
-					cand.pop_back();
-				else
+				if(disk[j].second<=disk[i].second){
+					flag = false;
 					break;
+				}
 			}
-
-			cand.push_back(disk[i]);
-		}	
-		cout<<"cand"<<endl;
-		for (int i = 0; i < cand.size(); ++i)
-		{
-			cout<<cand[i].first<<" "<<cand[i].second<<endl;
+			if(flag){
+				cand.push_back(disk[i]);
+			}
 		}
 		
+		sort(cand.begin(),cand.end());
 		int m = cand.size();
 		vector<int> next_cand(N, m - 1);
-		cout<<"pq "<<m-1<<endl;
 		priority_queue<info> pq = priority_queue<info>();
 		for (int i = 0; i < N; i++)
 		{
@@ -92,7 +88,7 @@ main()
 					in.pos_index = i;
 					in.disk_index = next_cand[i];
 					in.weight = cand[next_cand[i]].second;
-					cout<<i<<" "<<next_cand[i]<<" "<<in.weight<<endl;
+					// cout<<i<<" "<<next_cand[i]<<" "<<in.weight<<endl;
 					pq.push(in);
 
 					//std::cout << "pushing " << in.pos_index << ", " << in.disk_index << std::endl;
