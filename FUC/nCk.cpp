@@ -12,6 +12,6 @@ unsigned long long nCk(int n,int k)
 	{
 		val = val * (n-i+1)/i ;
 	}
-
+	
 	return val;
 }
